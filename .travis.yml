@@ -1,5 +1,8 @@
 sudo: required
 
+# https://github.com/travis-ci/docs-travis-ci-com/issues/910#issuecomment-356915625
+language: minimal
+
 services:
   - docker
 
