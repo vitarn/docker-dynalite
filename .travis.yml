@@ -1,7 +1,5 @@
 sudo: required
 
-language: node_js
-
 services:
   - docker
 
@@ -10,9 +8,3 @@ before_install:
 
 script:
   - docker image ls
-
-# after_success:
-#   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-#       docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-#       docker push vitarn/dynalite;
-#     fi
