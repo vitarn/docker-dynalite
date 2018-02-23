@@ -11,3 +11,6 @@ before_install:
 
 script:
   - docker image ls
+
+notifications:
+  email: false
