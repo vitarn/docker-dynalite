@@ -22,4 +22,4 @@ RUN npm install dynalite --no-save \
 
 EXPOSE 4567
 
-CMD ["./node_modules/.bin/dynalite"]
+CMD ['./node_modules/.bin/dynalite', '--createTableMs 0', '--deleteTableMs 0', '--updateTableMs 0']
