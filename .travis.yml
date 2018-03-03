@@ -1,4 +1,5 @@
-sudo: true
+sudo: required
+dist: trusty
 
 # https://github.com/travis-ci/docs-travis-ci-com/issues/910#issuecomment-356915625
 language: minimal
