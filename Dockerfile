@@ -4,11 +4,7 @@ WORKDIR /app
 
 ENV DYNALITE_VERSION 1.2.0
 
-RUN apk add --no-cache --virtual .build-deps \
-  python \
-  make \
-  g++ \
-  && npm install dynalite@$DYNALITE_VERSION --no-save \
+RUN npm install dynalite@$DYNALITE_VERSION --no-save --production \
   && rm -Rf ~/.npm \
   && find \( \
       -type f \
@@ -24,8 +20,7 @@ RUN apk add --no-cache --virtual .build-deps \
       -name '*.test.js' -o \
       -name '*.ts' -o \
       -name 'yarn.lock' \
-     \) -delete \
-  && apk del .build-deps
+     \) -delete
 
 EXPOSE 4567
 
