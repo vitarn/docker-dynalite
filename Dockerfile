@@ -30,4 +30,4 @@ RUN apk add --no-cache --virtual .build-deps \
 
 EXPOSE 4567
 
-CMD ['./node_modules/.bin/dynalite', '--createTableMs 0', '--deleteTableMs 0', '--updateTableMs 0']
+CMD ["./node_modules/.bin/dynalite", "--createTableMs 0", "--deleteTableMs 0", "--updateTableMs 0"]
