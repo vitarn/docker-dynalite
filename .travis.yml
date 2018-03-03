@@ -1,16 +1,32 @@
 sudo: required
+dist: trusty
 
 # https://github.com/travis-ci/docs-travis-ci-com/issues/910#issuecomment-356915625
 language: minimal
 
-services:
-  - docker
-
-before_install:
-  - docker build -t vitarn/dynalite .
-
-script:
-  - docker image ls
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t dynalite .
+        - docker images
+    - stage: deploy master
+      if: branch = master AND type IN (push)
+      script:
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+        - docker build -t dynalite .
+        - docker tag dynalite vitarn/dynalite:next
+        - docker push vitarn/dynalite:next
+    - stage: deploy tag
+      if: tag IS present
+      script:
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+        - docker build -t dynalite .
+        - docker tag dynalite vitarn/dynalite
+        - docker push vitarn/dynalite
+        # parameter expansion https://stackoverflow.com/questions/19482123/extract-part-of-a-string-using-bash-cut-split/19482947#19482947
+        - docker tag dynalite vitarn/dynalite:${TRAVIS_TAG#v}
+        - docker push vitarn/dynalite:${TRAVIS_TAG#v}
 
 notifications:
   email: false

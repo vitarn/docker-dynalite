@@ -2,7 +2,14 @@ FROM node:alpine
 
 WORKDIR /app
 
-RUN npm install dynalite --no-save \
+ENV NODE_ENV production
+ENV DYNALITE_VERSION 1.2.0
+
+RUN apk add --no-cache --virtual .build-deps \
+  python \
+  make \
+  g++ \
+  && npm install dynalite@$DYNALITE_VERSION --no-save \
   && rm -Rf ~/.npm \
   && find \( \
       -type f \
@@ -18,8 +25,9 @@ RUN npm install dynalite --no-save \
       -name '*.test.js' -o \
       -name '*.ts' -o \
       -name 'yarn.lock' \
-     \) -delete
+     \) -delete \
+  && apk del .build-deps
 
 EXPOSE 4567
 
-CMD ["./node_modules/.bin/dynalite"]
+CMD ['./node_modules/.bin/dynalite', '--createTableMs 0', '--deleteTableMs 0', '--updateTableMs 0']
