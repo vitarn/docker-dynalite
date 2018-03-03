@@ -10,7 +10,7 @@ jobs:
         - docker build -t dynalite .
         - docker images
     - stage: deploy master
-      if: branch = master
+      if: branch = master AND type IN (push)
       script:
         - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
         - docker build -t dynalite .
